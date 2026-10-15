@@ -6,14 +6,37 @@
   var netEl = document.getElementById('net');
   var stage = document.getElementById('stage');
 
+  // Scale the 1280x720 design to whatever the TV browser reports.
+  // Old Fire TV browsers can report the wrong size at first, so this re-checks every half second.
+  var fitKey = '';
+  function smallest(a, b) { return a > 0 && b > 0 ? Math.min(a, b) : (a > 0 ? a : b); }
   function fit() {
-    var w = window.innerWidth, h = window.innerHeight;
+    var de = document.documentElement;
+    var w = smallest(de.clientWidth, window.innerWidth), h = smallest(de.clientHeight, window.innerHeight);
+    if (!w || !h) return;
+    var key = w + 'x' + h;
+    if (key === fitKey) return;
+    fitKey = key;
     var s = Math.min(w / 1280, h / 720);
-    var t = 'translate(' + Math.round((w - 1280 * s) / 2) + 'px,' + Math.round((h - 720 * s) / 2) + 'px) scale(' + s + ')';
-    stage.style.webkitTransform = t; stage.style.transform = t;
+    var x = Math.round((w - 1280 * s) / 2), y = Math.round((h - 720 * s) / 2);
+    var t = 'translate(' + x + 'px,' + y + 'px) scale(' + s + ')';
+    stage.style.webkitTransform = t;
+    stage.style.transform = t;
   }
-  window.addEventListener('resize', fit);
+  window.addEventListener('resize', function () { fitKey = ''; fit(); });
+  window.addEventListener('load', function () { fitKey = ''; fit(); });
+  setInterval(fit, 500);
   fit();
+
+  // For the first 20 seconds, show what size the TV browser reports (helps fix layout issues).
+  var diag = document.getElementById('diag'), diagEnd = Date.now() + 20000;
+  var diagTimer = setInterval(function () {
+    if (Date.now() > diagEnd) { diag.innerHTML = ''; clearInterval(diagTimer); return; }
+    var de = document.documentElement, v = /Chrome\/(\d+)/.exec(navigator.userAgent);
+    diag.innerHTML = 'iw ' + window.innerWidth + 'x' + window.innerHeight + ' cw ' + de.clientWidth + 'x' + de.clientHeight +
+      ' sc ' + screen.width + 'x' + screen.height + ' dpr ' + (window.devicePixelRatio || 1) + ' fit ' + fitKey +
+      ' chrome ' + (v ? v[1] : '?') + (/Silk/.test(navigator.userAgent) ? ' silk' : '');
+  }, 500);
 
   function remoteUrl() {
     return location.href.replace(/[?#].*$/, '').replace(/tv\.html$/, '').replace(/\/$/, '') + '/remote.html';

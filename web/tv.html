@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 <title>Gym TV</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
@@ -42,6 +42,7 @@ body { color: #F2F2F2; font-family: Archivo, "Helvetica Neue", Arial, sans-serif
 </head>
 <body>
 <div id="stage"><div id="view"></div><div id="net" class="mono">Reconnecting</div></div>
+<div id="diag" class="mono" style="position:fixed;left:6px;bottom:4px;font-size:16px;color:#999;z-index:9"></div>
 <script src="config.js"></script>
 <script src="api.js"></script>
 <script src="tv.js"></script>
