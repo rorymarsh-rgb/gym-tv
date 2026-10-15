@@ -22,6 +22,7 @@ import android.webkit.WebViewClient;
 public class MainActivity extends Activity {
 
     private static final long RETRY_MS = 5000;
+    private static final int DESIGN_WIDTH = 1280;
     private static final long REFRESH_MS = 6L * 60 * 60 * 1000;
 
     private final Handler handler = new Handler();
@@ -32,7 +33,7 @@ public class MainActivity extends Activity {
     private final Runnable reload = new Runnable() {
         @Override
         public void run() {
-            if (web != null) web.loadUrl(url);
+            if (web != null) fitAndLoad();
         }
     };
 
@@ -59,7 +60,13 @@ public class MainActivity extends Activity {
         s.setJavaScriptEnabled(true);
         s.setDomStorageEnabled(true);
         s.setMediaPlaybackRequiresUserGesture(false);
-        s.setCacheMode(WebSettings.LOAD_DEFAULT);
+        // Always fetch the latest version of the page, so design changes show up straight away.
+        s.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        // Size the page ourselves (see fitAndLoad), and ignore the system text size setting.
+        s.setUseWideViewPort(false);
+        s.setLoadWithOverviewMode(false);
+        s.setTextZoom(100);
+        s.setSupportZoom(false);
 
         web.setWebViewClient(new WebViewClient() {
             @Override
@@ -91,8 +98,27 @@ public class MainActivity extends Activity {
 
         setContentView(web);
         hideSystemUi();
-        web.loadUrl(url);
+        // Wait until the window has its real size, then load.
+        web.post(new Runnable() {
+            @Override
+            public void run() {
+                fitAndLoad();
+            }
+        });
         handler.postDelayed(refresh, REFRESH_MS);
+    }
+
+    /**
+     * The TV page is designed at 1280 x 720. Zoom the web view so that exactly
+     * 1280 page pixels span the screen width, whatever the TV's resolution or
+     * Fire OS display settings. Then load the page.
+     */
+    private void fitAndLoad() {
+        int w = web.getWidth();
+        if (w > 0) {
+            web.setInitialScale(Math.max(1, Math.round(w * 100f / DESIGN_WIDTH)));
+        }
+        web.loadUrl(url);
     }
 
     private void hideSystemUi() {
@@ -114,7 +140,7 @@ public class MainActivity extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // Menu or the centre button on the remote reloads the page.
         if (keyCode == KeyEvent.KEYCODE_MENU || keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-            web.loadUrl(url);
+            fitAndLoad();
             return true;
         }
         return super.onKeyDown(keyCode, event);
