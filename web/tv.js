@@ -100,7 +100,7 @@
         '<div class="e">' + names.join('<br>') + '</div></div>';
     }
     return '<div class="screen">' +
-      '<div class="mono muted topbar">READY WHEN YOU ARE</div>' +
+      '<div class="mono muted topbar">READY WHEN YOU ARE, RORY</div>' +
       '<h1 class="big" style="font-size:96px;margin-top:18px">Pick a workout</h1>' +
       '<div class="row" style="margin-top:44px;-webkit-align-items:flex-start;align-items:flex-start">' + cards + '</div>' +
       '<div class="foot mono">Start from your phone: ' + E(remoteUrl()) + '</div></div>';
