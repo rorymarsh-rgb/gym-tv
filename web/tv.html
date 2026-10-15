@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gym TV</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+html, body { margin: 0; height: 100%; background: #111111; overflow: hidden; }
+body { color: #F2F2F2; font-family: Archivo, "Helvetica Neue", Arial, sans-serif; cursor: none; }
+#stage { position: absolute; left: 0; top: 0; width: 1280px; height: 720px; -webkit-transform-origin: 0 0; transform-origin: 0 0; }
+.screen { position: absolute; left: 0; top: 0; width: 1280px; height: 720px; box-sizing: border-box; padding: 48px 56px; }
+.mono { font-family: "JetBrains Mono", Menlo, Consolas, monospace; }
+.muted { color: #A8A8A8; }
+.dim { color: #6E6E6E; }
+.accent { color: #FF6A2B; }
+.row { display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; }
+.between { -webkit-justify-content: space-between; justify-content: space-between; }
+.topbar { font-size: 20px; letter-spacing: 0.08em; }
+.label { font-size: 18px; letter-spacing: 0.08em; }
+.big { font-weight: 800; letter-spacing: -0.02em; line-height: 0.95; margin: 0; }
+.stat { margin-right: 56px; }
+.stat .v { font-size: 88px; font-weight: 800; line-height: 1.05; }
+.pip { width: 64px; height: 12px; border-radius: 6px; background: #333333; margin-right: 12px; }
+.pip.on { background: #F2F2F2; }
+.pip.now { background: #FF6A2B; }
+.side { position: absolute; right: 56px; top: 116px; width: 330px; bottom: 90px; border-left: 2px solid #2A2A2A; padding-left: 40px; overflow: hidden; }
+.side .item { margin-top: 22px; }
+.side .n { font-size: 24px; font-weight: 600; }
+.side .d { font-size: 18px; color: #A8A8A8; margin-top: 4px; }
+.side .done .n { text-decoration: line-through; color: #6E6E6E; }
+.side .done .d { color: #6E6E6E; }
+.side .now .n { font-weight: 800; font-size: 26px; }
+.foot { position: absolute; left: 56px; bottom: 40px; font-size: 16px; color: #8A8A8A; }
+.day { width: 340px; margin-right: 32px; padding: 28px; box-sizing: border-box; border: 2px solid #2A2A2A; border-radius: 20px; }
+.day.sel { border-color: #FF6A2B; }
+.day .t { font-size: 44px; font-weight: 800; }
+.day .e { font-size: 20px; color: #CFCFCF; margin-top: 8px; }
+#net { position: absolute; right: 24px; bottom: 20px; font-size: 16px; padding: 8px 14px; border-radius: 16px; background: #3A1A0E; color: #FFB08C; display: none; }
+#msg { padding: 80px; font-size: 32px; line-height: 1.4; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="view"></div><div id="net" class="mono">Reconnecting</div></div>
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script src="tv.js"></script>
+</body>
+</html>

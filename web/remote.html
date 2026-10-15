@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Gym">
+<meta name="theme-color" content="#F4F4F2">
+<title>Gym Remote</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #F4F4F2; color: #111111; }
+body { font-family: Archivo, -apple-system, "Helvetica Neue", Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
+button, input { font-family: inherit; font-size: 16px; color: inherit; }
+button { cursor: pointer; }
+.wrap { max-width: 480px; margin: 0 auto; padding: calc(16px + env(safe-area-inset-top)) 16px calc(24px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 14px; min-height: 100vh; }
+.mono { font-family: "JetBrains Mono", Menlo, monospace; }
+.kicker { font-size: 12px; letter-spacing: 0.08em; color: #5C5C5C; }
+.head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.title { font-size: 22px; font-weight: 800; }
+.tabs { display: flex; border: 1.5px solid #111; border-radius: 22px; overflow: hidden; }
+.tabs button { min-height: 40px; padding: 0 16px; border: none; background: transparent; font-weight: 600; font-size: 15px; }
+.tabs button[aria-pressed="true"] { background: #111; color: #fff; }
+.card { background: #fff; border: 1.5px solid #D6D6D2; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 8px; }
+.tag { font-size: 14px; font-weight: 600; color: #B03E0A; }
+.name { font-size: 30px; font-weight: 800; line-height: 1.05; }
+.sub { font-size: 17px; color: #3C3C3C; }
+.big { min-height: 92px; border: none; border-radius: 18px; background: #FF6A2B; color: #111; font-size: 24px; font-weight: 800; }
+.big:active, .btn:active { transform: scale(0.98); }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.btn { min-height: 60px; border: 1.5px solid #111; border-radius: 14px; background: #fff; font-size: 17px; font-weight: 600; }
+.btn[disabled] { opacity: 0.35; }
+.link { min-height: 48px; border: none; background: transparent; color: #5C5C5C; font-size: 15px; text-decoration: underline; }
+.list { display: flex; flex-direction: column; }
+.li { display: flex; justify-content: space-between; gap: 12px; font-size: 16px; padding: 10px 0; border-bottom: 1px solid #D6D6D2; }
+.li span:last-child { color: #5C5C5C; white-space: nowrap; }
+.weight { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.weight label { font-size: 14px; color: #5C5C5C; }
+.weight input { flex: 1; min-width: 0; min-height: 44px; border: 1.5px solid #D6D6D2; border-radius: 10px; padding: 0 12px; }
+.weight button { min-height: 44px; padding: 0 14px; border: 1.5px solid #111; border-radius: 10px; background: #fff; font-weight: 600; }
+.countdown { font-size: 64px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+.day { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.day .dn { font-size: 24px; font-weight: 800; }
+.day .start { min-height: 52px; padding: 0 22px; border: none; border-radius: 14px; background: #FF6A2B; font-weight: 800; font-size: 17px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { min-height: 44px; padding: 0 16px; border: 1.5px solid #BDBDB8; border-radius: 22px; background: transparent; font-weight: 600; font-size: 15px; }
+.chip[aria-pressed="true"] { background: #111; border-color: #111; color: #fff; }
+.ex { background: #fff; border: 1.5px solid #D6D6D2; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.ex .top { display: flex; gap: 6px; align-items: center; }
+.ex input { min-height: 40px; border: 1.5px solid #D6D6D2; border-radius: 8px; padding: 0 10px; width: 100%; min-width: 0; }
+.ex .nm { font-weight: 600; font-size: 17px; }
+.ex .fields { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.ex .fields label { font-size: 11px; color: #5C5C5C; display: flex; flex-direction: column; gap: 3px; }
+.icon { width: 40px; height: 40px; flex: none; border: none; background: transparent; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+.icon:active { background: #EEE; }
+.dashed { min-height: 50px; border: 1.5px dashed #8A8A86; border-radius: 12px; background: transparent; font-weight: 600; }
+.save { position: sticky; bottom: calc(12px + env(safe-area-inset-bottom)); min-height: 56px; border: none; border-radius: 16px; background: #111; color: #fff; font-size: 18px; font-weight: 800; }
+.save[disabled] { background: #9A9A96; }
+.toast { position: fixed; left: 50%; top: calc(14px + env(safe-area-inset-top)); transform: translateX(-50%); background: #111; color: #fff; padding: 10px 16px; border-radius: 20px; font-size: 14px; display: none; z-index: 5; max-width: 90vw; }
+.status { font-size: 12px; color: #5C5C5C; }
+.status.bad { color: #B00020; }
+</style>
+</head>
+<body>
+<div class="toast" id="toast" role="status"></div>
+<div class="wrap">
+  <div class="head">
+    <div>
+      <div class="kicker mono" id="status">CONNECTING</div>
+      <div class="title" id="dayTitle">Gym</div>
+    </div>
+    <div class="tabs" role="group" aria-label="View">
+      <button type="button" id="tabLive" aria-pressed="true">Live</button>
+      <button type="button" id="tabPlan" aria-pressed="false">Plan</button>
+    </div>
+  </div>
+  <div id="main" style="display:flex;flex-direction:column;gap:14px;flex:1"></div>
+</div>
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script src="remote.js"></script>
+</body>
+</html>

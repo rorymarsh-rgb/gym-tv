@@ -1,0 +1,51 @@
+plugins {
+    id 'com.android.application'
+}
+
+// The web address the app opens. The GitHub workflow passes this in automatically.
+def tvUrl = project.findProperty('tvUrl') ?: 'https://example.github.io/gym-tv/tv.html'
+def buildNumber = (project.findProperty('versionCode') ?: '1').toString().toInteger()
+
+android {
+    namespace 'uk.gymtv.app'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'uk.gymtv.app'
+        minSdk 22          // Android 5.1, so it runs on old Fire OS 5 sticks
+        targetSdk 35
+        versionCode buildNumber
+        versionName "1.0.${buildNumber}"
+        resValue 'string', 'tv_url', tvUrl
+    }
+
+    // One fixed key, so new versions install over old ones without uninstalling.
+    signingConfigs {
+        shared {
+            storeFile file('../gymtv.keystore')
+            storePassword 'gymtv123'
+            keyAlias 'gymtv'
+            keyPassword 'gymtv123'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.shared
+        }
+        debug {
+            signingConfig signingConfigs.shared
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lint {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
