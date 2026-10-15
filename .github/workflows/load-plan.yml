@@ -1,0 +1,22 @@
+name: Load workout plan
+
+# When plans/plan.json changes, send it to the gym database.
+# Edits made on the phone are kept until the next time this file changes.
+on:
+  push:
+    branches: [main]
+    paths: ['plans/plan.json']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  load:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node .github/scripts/load-plan.mjs

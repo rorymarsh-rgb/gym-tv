@@ -1,0 +1,131 @@
+{
+  "days": [
+    {
+      "name": "Day A",
+      "exercises": [
+        {
+          "name": "Back Squat",
+          "sets": 3,
+          "reps": "6-8",
+          "rest": 120,
+          "weight": ""
+        },
+        {
+          "name": "Bench Press",
+          "sets": 3,
+          "reps": "6-8",
+          "rest": 120,
+          "weight": ""
+        },
+        {
+          "name": "Chest-Supported DB Row",
+          "sets": 3,
+          "reps": "8-12",
+          "rest": 90,
+          "weight": ""
+        },
+        {
+          "name": "DB Lateral Raise",
+          "sets": 3,
+          "reps": "12-15",
+          "rest": 45,
+          "weight": ""
+        },
+        {
+          "name": "Cable Curl",
+          "sets": 2,
+          "reps": "10-12",
+          "rest": 45,
+          "weight": ""
+        }
+      ]
+    },
+    {
+      "name": "Day B",
+      "exercises": [
+        {
+          "name": "Romanian Deadlift",
+          "sets": 3,
+          "reps": "8-10",
+          "rest": 120,
+          "weight": ""
+        },
+        {
+          "name": "Pull Up",
+          "sets": 3,
+          "reps": "6-10",
+          "rest": 120,
+          "weight": ""
+        },
+        {
+          "name": "Incline DB Press",
+          "sets": 3,
+          "reps": "8-12",
+          "rest": 90,
+          "weight": ""
+        },
+        {
+          "name": "Bulgarian Split Squat",
+          "sets": 2,
+          "reps": "8-10 each",
+          "rest": 90,
+          "weight": ""
+        },
+        {
+          "name": "Cable Tricep Pushdown",
+          "sets": 2,
+          "reps": "10-15",
+          "rest": 45,
+          "weight": ""
+        }
+      ]
+    },
+    {
+      "name": "Day C",
+      "exercises": [
+        {
+          "name": "Overhead Press",
+          "sets": 3,
+          "reps": "6-8",
+          "rest": 120,
+          "weight": ""
+        },
+        {
+          "name": "Barbell Row",
+          "sets": 3,
+          "reps": "8-10",
+          "rest": 90,
+          "weight": ""
+        },
+        {
+          "name": "Goblet Squat",
+          "sets": 3,
+          "reps": "10-12",
+          "rest": 90,
+          "weight": ""
+        },
+        {
+          "name": "Cable Fly",
+          "sets": 2,
+          "reps": "12-15",
+          "rest": 60,
+          "weight": ""
+        },
+        {
+          "name": "Hammer Curl",
+          "sets": 2,
+          "reps": "10-12",
+          "rest": 45,
+          "weight": ""
+        },
+        {
+          "name": "Hanging Knee Raise",
+          "sets": 2,
+          "reps": "10-15",
+          "rest": 45,
+          "weight": ""
+        }
+      ]
+    }
+  ]
+}
