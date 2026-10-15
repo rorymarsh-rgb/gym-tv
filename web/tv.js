@@ -28,16 +28,6 @@
   setInterval(fit, 500);
   fit();
 
-  // For the first 20 seconds, show what size the TV browser reports (helps fix layout issues).
-  var diag = document.getElementById('diag'), diagEnd = Date.now() + 20000;
-  var diagTimer = setInterval(function () {
-    if (Date.now() > diagEnd) { diag.innerHTML = ''; clearInterval(diagTimer); return; }
-    var de = document.documentElement, v = /Chrome\/(\d+)/.exec(navigator.userAgent);
-    diag.innerHTML = 'iw ' + window.innerWidth + 'x' + window.innerHeight + ' cw ' + de.clientWidth + 'x' + de.clientHeight +
-      ' sc ' + screen.width + 'x' + screen.height + ' dpr ' + (window.devicePixelRatio || 1) + ' fit ' + fitKey +
-      ' chrome ' + (v ? v[1] : '?') + (/Silk/.test(navigator.userAgent) ? ' silk' : '');
-  }, 500);
-
   function remoteUrl() {
     return location.href.replace(/[?#].*$/, '').replace(/tv\.html$/, '').replace(/\/$/, '') + '/remote.html';
   }
